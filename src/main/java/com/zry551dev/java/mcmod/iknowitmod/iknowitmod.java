@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
@@ -15,6 +16,10 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.spongepowered.asm.launch.MixinBootstrap;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.MixinEnvironment;
+import org.spongepowered.asm.mixin.Mixins;
 
 import java.util.stream.Collectors;
 
@@ -24,8 +29,14 @@ public class iknowitmod
 {
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger();
-
     /*public iknowitmod() {
+        MixinBootstrap.init();
+
+        MixinEnvironment.getDefaultEnvironment()
+                .addConfiguration("mixins.gui.json");
+        //Mixins.addConfiguration("mixins.gui.json");
+    }*/
+    public iknowitmod() {
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the enqueueIMC method for modloading
@@ -37,49 +48,60 @@ public class iknowitmod
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
-    }*/
+    }
 
-    /*private void setup(final FMLCommonSetupEvent event)
+
+    private void setup(final FMLCommonSetupEvent event)
     {
         // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
-    }*/
 
-    /*private void doClientStuff(final FMLClientSetupEvent event) {
+    }
+
+    private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
-        LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
-    }*/
-
-    /*private void enqueueIMC(final InterModEnqueueEvent event)
+        //LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
+        this.mixin_in();
+    }
+    private void enqueueIMC(final InterModEnqueueEvent event)
     {
         // some example code to dispatch IMC to another mod
-        InterModComms.sendTo("examplemod", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
-    }*/
+        //InterModComms.sendTo("examplemod", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
+    }
 
-    /*private void processIMC(final InterModProcessEvent event)
+    private void processIMC(final InterModProcessEvent event)
     {
         // some example code to receive and process InterModComms from other mods
-        LOGGER.info("Got IMC {}", event.getIMCStream().
+        /*LOGGER.info("Got IMC {}", event.getIMCStream().
                 map(m->m.getMessageSupplier().get()).
-                collect(Collectors.toList()));
-    }*/
+                collect(Collectors.toList()));*/
+    }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
-    /*@SubscribeEvent
+    @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
         // do something when the server starts
-        LOGGER.info("HELLO from server starting");
-    }*/
+        //LOGGER.info("HELLO from server starting");
+
+    }
 
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
     // Event bus for receiving Registry Events)
-    /*
+
     @Mod.EventBusSubscriber(bus=Mod.EventBusSubscriber.Bus.MOD)
     public static class RegistryEvents {
         @SubscribeEvent
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
             // register a new block here
-            LOGGER.info("HELLO from Register Block");
+            //LOGGER.info("HELLO from Register Block");
         }
-    }*/
+    }
+
+    private static void mixin_in(){
+        LOGGER.info("I Know It !");
+        //LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+        MixinBootstrap.init();
+
+        //MixinEnvironment.getDefaultEnvironment()
+        //        .addConfiguration("mixins.gui.json");
+        Mixins.addConfiguration("mixins.gui.json");
+    }
 }
