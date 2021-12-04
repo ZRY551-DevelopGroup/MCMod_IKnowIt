@@ -1,12 +1,9 @@
 package com.zry551dev.java.mcmod.iknowitmod;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -17,11 +14,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.spongepowered.asm.launch.MixinBootstrap;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.MixinEnvironment;
 import org.spongepowered.asm.mixin.Mixins;
-
-import java.util.stream.Collectors;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod("iknowitmod")
@@ -33,10 +26,11 @@ public class iknowitmod
         MixinBootstrap.init();
 
         MixinEnvironment.getDefaultEnvironment()
-                .addConfiguration("mixins.gui.json");
-        //Mixins.addConfiguration("mixins.gui.json");
+                .addConfiguration("mixins.iknowitmod.json");
+        //Mixins.addConfiguration("mixins.iknowitmod.json");
     }*/
     public iknowitmod() {
+        mixin_in();
         // Register the setup method for modloading
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
         // Register the enqueueIMC method for modloading
@@ -60,10 +54,15 @@ public class iknowitmod
     private void doClientStuff(final FMLClientSetupEvent event) {
         // do something that can only be done on the client
         //LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().options);
-        this.mixin_in();
+
+
+
+
+
     }
     private void enqueueIMC(final InterModEnqueueEvent event)
     {
+
         // some example code to dispatch IMC to another mod
         //InterModComms.sendTo("examplemod", "helloworld", () -> { LOGGER.info("Hello world from the MDK"); return "Hello world";});
     }
@@ -74,6 +73,7 @@ public class iknowitmod
         /*LOGGER.info("Got IMC {}", event.getIMCStream().
                 map(m->m.getMessageSupplier().get()).
                 collect(Collectors.toList()));*/
+
     }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
@@ -81,7 +81,11 @@ public class iknowitmod
         // do something when the server starts
         //LOGGER.info("HELLO from server starting");
 
+
     }
+
+
+
 
     // You can use EventBusSubscriber to automatically subscribe events on the contained class (this is subscribing to the MOD
     // Event bus for receiving Registry Events)
@@ -92,6 +96,8 @@ public class iknowitmod
         public static void onBlocksRegistry(final RegistryEvent.Register<Block> blockRegistryEvent) {
             // register a new block here
             //LOGGER.info("HELLO from Register Block");
+
+
         }
     }
 
@@ -101,7 +107,10 @@ public class iknowitmod
         MixinBootstrap.init();
 
         //MixinEnvironment.getDefaultEnvironment()
-        //        .addConfiguration("mixins.gui.json");
-        Mixins.addConfiguration("mixins.gui.json");
+        //        .addConfiguration("mixins.iknowitmod.json");
+        Mixins.addConfiguration("mixins.iknowitmod.json");
     }
+
+
+
 }

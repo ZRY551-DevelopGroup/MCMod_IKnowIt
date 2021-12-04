@@ -1,6 +1,5 @@
 package com.zry551dev.java.mcmod.iknowitmod.mixingui;
 
-import net.minecraft.client.GameConfiguration;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
@@ -9,7 +8,10 @@ import org.spongepowered.asm.mixin.Overwrite;
 @Mixin(Minecraft.class)
 public class showgui<WorldSelectionType>  {
 
-
+/*,
+  "injectors": {
+    "defaultRequire": 1
+  }*/
 
     /**
      * @author
